@@ -11,8 +11,15 @@ export default new Router({
   routes: [
     {
       path: '/',
+      props: true,
       name: 'Home',
-      component: Home
+      component: Home, 
+      children: [
+        {
+          path: '/:attr',
+          props: true
+        }
+      ]
     }
   ]
 })

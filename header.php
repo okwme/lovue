@@ -4,6 +4,10 @@ var description = <?php echo json_encode(get_bloginfo( 'description' ) ); ?>;
 var menu = <?php echo json_encode(wp_get_nav_menu_items( 'main' ) ); ?>;
 </script> -->
 <?php 
+$name = get_bloginfo( 'name' );
+$description = get_bloginfo( 'description' );
+$menu = wp_get_nav_menu_items( 'main' );
+
 $post_args = array(
   'post_type'              => array( 'post' ),
   'post_status'            => array( 'publish' ),
