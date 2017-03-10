@@ -2,11 +2,10 @@
 <div>
   <h1><router-link :to='{name:"Home"}'>{{wordpress.name}}</router-link></h1>
   <div v-if='location'>
-  show one
+   <component v-bind:is="location.post_type" :post='location'></component>
   </div>
   <div v-else>
     <div v-for='post in wordpress.posts.posts'>
-    {{post}}
     <router-link :to='{path: post.post_name}'>{{post.post_title}}</router-link>
     </div>
   </div>
@@ -14,9 +13,10 @@
 </template>
 
 <script>
-// var wordpress = require('../../static/wordpress.js')
-// import wordpress from '../../static/wordpress'
-console.log(wordpress)
+
+import Post from '@/components/Post'
+import Page from '@/components/Page'
+
 export default {
 
   name: 'Home',
@@ -26,8 +26,12 @@ export default {
       wordpress
     };
   },
+  components: {
+    Post,
+    Page
+  },
   mounted () {
-    console.log(this)
+    // console.log(this)
   },
   computed: {
     location () {
