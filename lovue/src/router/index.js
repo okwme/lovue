@@ -10,16 +10,10 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '*',
       props: true,
       name: 'Home',
-      component: Home, 
-      children: [
-        {
-          path: '/:attr',
-          props: true
-        }
-      ]
+      component: Home
     }
   ]
 })

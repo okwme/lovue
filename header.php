@@ -1,8 +1,3 @@
-<!-- <script>
-var name = <?php echo json_encode(get_bloginfo( 'name' ) ); ?>;
-var description = <?php echo json_encode(get_bloginfo( 'description' ) ); ?>;
-var menu = <?php echo json_encode(wp_get_nav_menu_items( 'main' ) ); ?>;
-</script> -->
 <?php 
 $name = get_bloginfo( 'name' );
 $description = get_bloginfo( 'description' );
@@ -14,6 +9,7 @@ $post_args = array(
 );
 $posts = new WP_Query( $post_args );
 foreach($posts->posts as &$post) {
+  $post->permalink = str_replace(get_site_url(), '', get_the_permalink($post->ID));
   $fields = get_fields($post->ID);
   if(is_array($fields)){
     foreach($fields as $field=>$value){
@@ -31,6 +27,7 @@ $page_args = array(
 $pages = new WP_Query( $page_args );
 // debug($pages);
 foreach($pages->posts as &$page) {
+  $post->permalink = str_replace(get_site_url(), '', get_the_permalink($post->ID));
   $fields = get_fields($page->ID);
   if(is_array($fields)){
     foreach($fields as $field=>$value){

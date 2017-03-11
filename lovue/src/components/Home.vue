@@ -6,7 +6,7 @@
   </div>
   <div v-else>
     <div v-for='post in wordpress.posts.posts'>
-    <router-link :to='{path: post.post_name}'>{{post.post_title}}</router-link>
+    <router-link :to='{path: post.permalink}'>{{post.post_title}}</router-link>
     </div>
   </div>
 </div>
@@ -37,14 +37,14 @@ export default {
     location () {
       var vm = this
       var postkey = this.wordpress.posts.posts.findIndex(function (post) {
-        return post.post_name === vm.attr
+        return post.permalink === vm.$route.path
       })
       if (postkey > -1) {
         return this.wordpress.posts.posts[postkey]
       }
 
       var pagekey = this.wordpress.pages.posts.findIndex(function (post) {
-        return post.post_name === vm.attr
+        return post.permalink === vm.attr + '/'
       })
       if (pagekey > -1) {
         return this.wordpress.pages.posts[pagekey]
