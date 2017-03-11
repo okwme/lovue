@@ -1,6 +1,11 @@
 <template>
 <div>
-  <h1><router-link :to='{name:"Home"}'>{{wordpress.name}}</router-link></h1>
+  <header class='grid'>
+    <div :id='"menu-item-" + menuItem.post_name' :class='menuClasses' v-for='menuItem in wordpress.menus["main-menu"]'>
+      <router-link v-if='menuItem.target === ""' :to='{path: menuItem.url}'>{{menuItem.title}}</router-link>
+      <a v-else :target='menuItem.target' :href='menuItem.url'>{{menuItem.title}}</a>
+    </div>
+  </header>
   <div v-if='location'>
    <component v-bind:is="location.post_type" :post='location'></component>
   </div>
@@ -34,17 +39,22 @@ export default {
     // console.log(this)
   },
   computed: {
+    menuClasses () {
+      var menuClasses = {}
+      menuClasses['col-1-' + this.wordpress.menus['main-menu'].length] = true
+      return menuClasses
+    },
     location () {
       var vm = this
       var postkey = this.wordpress.posts.posts.findIndex(function (post) {
-        return post.permalink === vm.$route.path
+        return post.permalink === vm.$route.path || post.permalink === vm.$route.path + '/'
       })
       if (postkey > -1) {
         return this.wordpress.posts.posts[postkey]
       }
 
       var pagekey = this.wordpress.pages.posts.findIndex(function (post) {
-        return post.permalink === vm.attr + '/'
+        return post.permalink === vm.$route.path || post.permalink === vm.$route.path + '/'
       })
       if (pagekey > -1) {
         return this.wordpress.pages.posts[pagekey]

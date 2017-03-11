@@ -1,7 +1,13 @@
 <?php 
 $name = get_bloginfo( 'name' );
 $description = get_bloginfo( 'description' );
-$menu = wp_get_nav_menu_items( 'main' );
+$menus = get_nav_menu_locations();
+foreach($menus as $key=>&$menu){
+  $menu = wp_get_nav_menu_items($menu);
+  foreach($menu as &$item){
+    $item->url = $item->target == '' ? str_replace(get_site_url(), '', $item->url) : $item->url;
+  }
+}
 
 $post_args = array(
   'post_type'              => array( 'post' ),
@@ -27,7 +33,7 @@ $page_args = array(
 $pages = new WP_Query( $page_args );
 // debug($pages);
 foreach($pages->posts as &$page) {
-  $post->permalink = str_replace(get_site_url(), '', get_the_permalink($post->ID));
+  $page->permalink = str_replace(get_site_url(), '', get_the_permalink($page->ID));
   $fields = get_fields($page->ID);
   if(is_array($fields)){
     foreach($fields as $field=>$value){
@@ -36,7 +42,7 @@ foreach($pages->posts as &$page) {
   }
 }
 // echo "<script>var pages = " . json_encode($pages) . ";</script>";
-$data = 'var wordpress = ' . json_encode(array('name'=>$name, 'description'=>$description, 'menu'=>$menu, 'posts'=>$posts, 'pages'=>$pages));
+$data = 'var wordpress = ' . json_encode(array('name'=>$name, 'description'=>$description, 'menus'=>$menus, 'posts'=>$posts, 'pages'=>$pages));
 $my_file = getcwd() . '/wp-content/themes/lovue/lovue/static/wordpress.js';
 
 $handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file); //implicitly creates file

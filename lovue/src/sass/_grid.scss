@@ -1,0 +1,132 @@
+
+/* GRID */
+/* GRID */
+/* GRID */
+html, body{
+  margin:0;
+  padding:0;
+}
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+.grid{
+  width:100%;
+  max-width: $max-width;
+  min-width:320px;
+  margin-left:auto;
+  margin-right:auto;
+  display:flex;
+  align-items: center;
+  padding: 0 #{$padding/2};
+}
+
+
+[class*='col-'] {
+  position:relative;
+  float: left;
+  width:100%;
+  min-height:1px;
+  padding:0 #{$padding / 2};
+}
+[class*='col-']:last-of-type {
+
+}
+[class*='col-']:first-of-type {
+
+}
+.grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.col-1-1{
+  width:100%;
+}
+@for $i from 1 through 12{
+  @for $j from 1 through 12{
+    @if ($j < $i) {
+      .col-#{$j}-#{$i}{
+
+        $foo : $j / $i;
+        $foo : $foo * 100;
+        width :  #{$foo+"%"};
+      }
+    } 
+  }
+}
+
+
+
+/* mobile */
+/* mobile */
+/* mobile */
+@media only screen and (min-width : 0px) and (max-width : $mobile-max-width)  {
+
+  .mob-0{
+    width:0%;
+    padding:0px;
+  }
+  .mob-1-1{
+    width:100%;
+  }
+  @for $i from 1 through 12{
+    @for $j from 1 through 12{
+      @if ($j < $i) {
+        .mob-#{$j}-#{$i}{
+          $foo : $j / $i;
+          $foo : $foo * 100;
+          width :  #{$foo+"%"};
+        }
+      } 
+    }
+  }
+}
+@media only screen and (min-width : 0px) and (max-width : $mobile-max-width) and (orientation : portrait) {
+
+}
+@media only screen and (min-width : 0px) and (max-width : $mobile-max-width) and (orientation : landscape) {
+
+}
+
+
+/* tablet */
+/* tablet */
+/* tablet */
+@media only screen and (min-width : 0) and (max-width : $tablet-max-width)  {
+    .grid{
+    display: block;
+  }
+
+  [class*='col-'] {
+    padding: 0 #{$mobile-padding / 2};
+  }
+  .tab-0{
+    width:0%;
+    padding:0px;
+  }
+  .tab-1-1{
+    width:100%;
+  }
+  .grid{
+    padding: 0 #{$mobile-padding/2};
+  }
+  @for $i from 1 through 12{
+    @for $j from 1 through 12{
+      @if ($j < $i) {
+        .tab-#{$j}-#{$i}{
+          $foo : $j / $i;
+          $foo : $foo * 100;
+          width :  #{$foo+"%"};
+        }
+      } 
+    }
+  }
+}
+@media only screen and (min-width : $tablet-min-width ) and (max-width : $tablet-max-width) and (orientation : portrait) {
+
+}
+@media only screen and (min-width : $tablet-min-width ) and (max-width : $tablet-max-width) and (orientation : landscape) {
+
+}

@@ -1,12 +1,12 @@
 <template>
-<div>page</div>
+<div>{{post}}</div>
 </template>
 
 <script>
 export default {
 
   name: 'Page',
-
+  props: ['post'],
   data () {
     return {
 
